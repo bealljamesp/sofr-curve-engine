@@ -1,3 +1,5 @@
+# Multi-Curve SOFR Bootstrapper & Fixed Income Risk Engine (`sofr-curve-engine`)
+
 A high-performance, vectorized fixed income pricing and term-structure risk engine implementing post-LIBOR multi-curve frameworks (SOFR OIS discounting and curve construction) built strictly on modern Python 3.12+ and SIMD-aligned NumPy linear algebra.
 
 ---
@@ -7,7 +9,7 @@ A high-performance, vectorized fixed income pricing and term-structure risk engi
 - **Runtime Target:** Python 3.12+ (isolated deterministic numerical execution profiles).
 - **Strict Typing:** PEP 585/604 lowercase generics and pipe syntax (`float | None`), PEP 646 / `numpy.typing.NDArray[np.float64]` for all array interfaces to eliminate silent dimension/casting bugs.
 - **Anti-Loop Mandate:** Zero explicit procedural loops (`for`, `while`) or `pandas.apply()` across pricing, cash flow scheduling, and sensitivity grids.
-- **Memory Profiling:** Zero-copy contiguous C-arrays (`order='C'`), explicit zero-copy extraction via `.to_numpy(dtype=np.float64, copy=False)`, and strict separation between $O(1)$ scalar metrics and $O(N \\times K)$ tenor sensitivity matrices.
+- **Memory Profiling:** Zero-copy contiguous C-arrays (`order='C'`), explicit zero-copy extraction via `.to_numpy(dtype=np.float64, copy=False)`, and strict separation between $O(1)$ scalar metrics and $O(N \times K)$ tenor sensitivity matrices.
 - **Decoupled Engine Core:** Stateless calculation core decoupled from ingestion, file I/O, and reporting layers.
 
 ---
@@ -21,8 +23,8 @@ A high-performance, vectorized fixed income pricing and term-structure risk engi
 
 ### B. Valuation & Sensitivity Linear Algebra
 - **Matrix Cash Flow Valuation:** Cash flow schedules modeled as structured arrays / 2D matrices where portfolio NPV is evaluated strictly via native dot products:
-  $$\\text{NPV} = \\mathbf{P}^T \\mathbf{C}$$
-  where $\\mathbf{P}$ is the vector of discount factors and $\\mathbf{C}$ represents asset cash flow projections.
+  $$\text{NPV} = \mathbf{P}^T \mathbf{C}$$
+  where $\mathbf{P}$ is the vector of discount factors and $\mathbf{C}$ represents asset cash flow projections.
 - **Duration & Convexity Decomposition:**
   - Analytical and bump-and-revalue DV01 (Dollar Value of a 01).
   - Modified Duration and Macauley Duration.
@@ -48,3 +50,4 @@ sofr-curve-engine/
 └── tests/
     ├── test_bootstrapper.py
     └── test_sensitivities.py
+```
